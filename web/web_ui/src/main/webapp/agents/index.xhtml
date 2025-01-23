@@ -137,9 +137,10 @@
             rendered="#{jobQueueManager.tablePrefs.isVisible('totalUsersColumn')}">
             <p:commandLink ajax="true" id="lnkUserDetails" action="#{jobQueueManager.setCurrentJobInstanceForUser(node)}"
                            oncomplete="PF('userDetailsPopup').show();" update=":userDetailsPopupID">
-              <h:outputText value="#{node.totalUsers}" rendered="#{node.incrementStrategy == 'Linear'}"/>
+              <h:outputText value="#{node.totalUsers}" rendered="#{node.incrementStrategy == 'Linear' and node.type eq 'job'}"/>
+              <h:outputText value="#{node.totalUsers}" rendered="#{node.type eq 'vm'}"/>
             </p:commandLink>
-              <h:outputText value="#{node.getNonlinearSteadyStateUsers()} users" rendered="#{node.incrementStrategy == 'Nonlinear'}"/>
+              <h:outputText value="#{node.getNonlinearSteadyStateUsers()} users" rendered="#{node.incrementStrategy == 'Nonlinear' and node.type eq 'job'}"/>
           </p:column>
 
           <p:column id="tpsColumn" headerText="TPS" styleClass="ellipsis min-column-size"
