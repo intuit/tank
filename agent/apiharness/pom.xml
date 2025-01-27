@@ -22,14 +22,13 @@
     </dependency>
 
     <dependency>
-      <groupId>${project.groupId}</groupId>
-      <artifactId>harness-data</artifactId>
-      <version>${project.version}</version>
+      <groupId>software.amazon.awssdk</groupId>
+      <artifactId>cloudwatch</artifactId>
     </dependency>
 
     <dependency>
       <groupId>${project.groupId}</groupId>
-      <artifactId>reporting-db</artifactId>
+      <artifactId>harness-data</artifactId>
       <version>${project.version}</version>
     </dependency>
 

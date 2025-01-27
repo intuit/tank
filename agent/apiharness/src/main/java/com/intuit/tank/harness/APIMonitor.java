@@ -32,7 +32,7 @@ import com.intuit.tank.vm.vmManager.models.CloudVmStatus;
 import com.intuit.tank.vm.vmManager.models.VMStatus;
 import com.intuit.tank.vm.vmManager.models.ValidationStatus;
 import com.intuit.tank.harness.logging.LogUtil;
-import com.intuit.tank.reporting.api.TPSInfoContainer;
+import com.intuit.tank.reporting.models.TPSInfoContainer;
 import com.intuit.tank.vm.agent.messages.WatsAgentStatusResponse;
 import com.intuit.tank.vm.api.enumerated.JobStatus;
 import com.intuit.tank.vm.api.enumerated.AgentCommand;

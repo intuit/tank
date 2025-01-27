@@ -41,7 +41,7 @@ import com.intuit.tank.http.HttpResponseFactory;
 import com.intuit.tank.http.xml.XMLRequest;
 import com.intuit.tank.logging.LogEventType;
 import com.intuit.tank.logging.LoggingProfile;
-import com.intuit.tank.results.TankResultBuilder;
+import com.intuit.tank.reporting.TankResultBuilder;
 import com.intuit.tank.runner.ErrorContainer;
 import com.intuit.tank.runner.TestStepContext;
 import com.intuit.tank.script.RequestDataPhase;

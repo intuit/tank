@@ -26,8 +26,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.intuit.tank.http.BaseRequest;
-import com.intuit.tank.reporting.api.TPSInfo;
-import com.intuit.tank.reporting.api.TPSInfoContainer;
+import com.intuit.tank.reporting.models.TPSInfo;
+import com.intuit.tank.reporting.models.TPSInfoContainer;
 import com.intuit.tank.vm.settings.TimeUtil;
 
 public class TPSMonitor {

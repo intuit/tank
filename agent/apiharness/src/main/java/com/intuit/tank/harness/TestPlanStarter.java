@@ -14,7 +14,7 @@ package com.intuit.tank.harness;
  */
 
 import com.intuit.tank.harness.data.*;
-import com.intuit.tank.reporting.api.TPSInfoContainer;
+import com.intuit.tank.reporting.models.TPSInfoContainer;
 import com.intuit.tank.runner.TestPlanRunner;
 import com.intuit.tank.vm.api.enumerated.IncrementStrategy;
 import org.apache.commons.lang3.time.DateUtils;

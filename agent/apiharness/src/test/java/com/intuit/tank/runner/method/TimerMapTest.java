@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 import org.junit.jupiter.api.Test;
 
-import com.intuit.tank.results.TankResult;
+import com.intuit.tank.reporting.models.TankResult;
 
 /**
  * The class <code>TimerMapTest</code> contains tests for the class <code>{@link TimerMap}</code>.

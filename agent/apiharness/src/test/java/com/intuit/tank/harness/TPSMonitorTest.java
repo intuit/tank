@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.intuit.tank.http.BaseRequest;
-import com.intuit.tank.reporting.api.TPSInfoContainer;
+import com.intuit.tank.reporting.models.TPSInfoContainer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

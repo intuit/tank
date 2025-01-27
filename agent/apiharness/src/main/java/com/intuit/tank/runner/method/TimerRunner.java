@@ -17,7 +17,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 
 import com.intuit.tank.harness.APITestHarness;
 import com.intuit.tank.harness.data.TimerStep;
-import com.intuit.tank.results.TankResult;
+import com.intuit.tank.reporting.models.TankResult;
 import com.intuit.tank.runner.TestStepContext;
 import com.intuit.tank.vm.common.TankConstants;
 

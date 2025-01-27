@@ -65,9 +65,9 @@ import com.intuit.tank.job.ProjectNodeBean;
 import com.intuit.tank.job.VMNodeBean;
 import com.intuit.tank.prefs.TablePreferences;
 import com.intuit.tank.prefs.TableViewState;
-import com.intuit.tank.reporting.api.ResultsReader;
-import com.intuit.tank.reporting.api.TPSInfo;
-import com.intuit.tank.reporting.factory.ReportingFactory;
+import com.intuit.tank.reporting.ResultsReader;
+import com.intuit.tank.reporting.models.TPSInfo;
+import com.intuit.tank.reporting.ReportingFactory;
 import com.intuit.tank.util.ExceptionHandler;
 
 /**

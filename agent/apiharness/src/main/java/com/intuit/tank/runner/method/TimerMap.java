@@ -17,8 +17,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.intuit.tank.harness.APITestHarness;
-import com.intuit.tank.results.TankResult;
-import com.intuit.tank.results.TankResultBuilder;
+import com.intuit.tank.reporting.models.TankResult;
+import com.intuit.tank.reporting.TankResultBuilder;
 
 public class TimerMap {
     private Map<String, TankResult> resultsMap = new HashMap<String, TankResult>();
