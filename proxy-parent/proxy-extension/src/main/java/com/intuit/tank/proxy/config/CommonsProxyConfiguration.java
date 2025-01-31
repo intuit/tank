@@ -17,19 +17,19 @@ package com.intuit.tank.proxy.config;
  */
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.HierarchicalConfiguration;
-import org.apache.commons.configuration.SubnodeConfiguration;
-import org.apache.commons.configuration.XMLConfiguration;
-import org.apache.commons.configuration.reloading.FileChangedReloadingStrategy;
-import org.apache.commons.configuration.tree.ConfigurationNode;
-import org.apache.commons.configuration.tree.xpath.XPathExpressionEngine;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.XMLConfiguration;
+import org.apache.commons.configuration2.builder.ReloadingFileBasedConfigurationBuilder;
+import org.apache.commons.configuration2.builder.fluent.Parameters;
+import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.apache.commons.configuration2.tree.ImmutableNode;
+import org.apache.commons.configuration2.tree.xpath.XPathExpressionEngine;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -47,8 +47,7 @@ public class CommonsProxyConfiguration implements ProxyConfiguration {
     public static final String SUGGESTED_CONFIG_NAME = "recording-proxy-config.xml";
 
     private String configPath = "recording-proxy-config.xml";    
-    private XMLConfiguration config;
-    private FileChangedReloadingStrategy reloadingStrategy;
+    private XMLConfiguration XMLConfig;
 
     private Set<ConfigInclusionExclusionRule> exclusions = new HashSet<ConfigInclusionExclusionRule>();
     private Set<ConfigInclusionExclusionRule> inclusions = new HashSet<ConfigInclusionExclusionRule>();
@@ -76,7 +75,7 @@ public class CommonsProxyConfiguration implements ProxyConfiguration {
      * {@inheritDoc}
      */
     public int getPort() {
-        return config.getInt("proxy-port", 8888);
+        return XMLConfig.getInt("proxy-port", 8888);
     }
 
     /**
@@ -84,14 +83,14 @@ public class CommonsProxyConfiguration implements ProxyConfiguration {
      */
     @Override
     public boolean isFollowRedirects() {
-        return config.getBoolean("follow-redirects", true);
+        return XMLConfig.getBoolean("follow-redirects", true);
     }
 
     /**
      * {@inheritDoc}
      */
     public String getOutputFile() {
-        return config.getString("output-file", new File("recordedOutput.xml").getAbsolutePath());
+        return XMLConfig.getString("output-file", new File("recordedOutput.xml").getAbsolutePath());
     }
     
     /**
@@ -99,16 +98,13 @@ public class CommonsProxyConfiguration implements ProxyConfiguration {
      */
     @Override
     public String getCertificateAuthorityPath() {
-    	return config.getString("certificate-authority-path", new File("auto_generated_ca.p12").getAbsolutePath());
+    	return XMLConfig.getString("certificate-authority-path", new File("auto_generated_ca.p12").getAbsolutePath());
     }
 
     /**
      * {@inheritDoc}
      */
     public Set<ConfigInclusionExclusionRule> getExclusions() {
-        if (needsReload()) {
-            readConfig();
-        }
         return exclusions;
     }
 
@@ -116,9 +112,6 @@ public class CommonsProxyConfiguration implements ProxyConfiguration {
      * {@inheritDoc}
      */
     public Set<ConfigInclusionExclusionRule> getInclusions() {
-        if (needsReload()) {
-            readConfig();
-        }
         return inclusions;
     }
 
@@ -126,9 +119,6 @@ public class CommonsProxyConfiguration implements ProxyConfiguration {
      * {@inheritDoc}
      */
     public Set<ConfigInclusionExclusionRule> getBodyInclusions() {
-        if (needsReload()) {
-            readConfig();
-        }
         return bodyInclusions;
     }
 
@@ -136,36 +126,29 @@ public class CommonsProxyConfiguration implements ProxyConfiguration {
      * {@inheritDoc}
      */
     public Set<ConfigInclusionExclusionRule> getBodyExclusions() {
-        if (needsReload()) {
-            readConfig();
-        }
         return bodyExclusions;
     }
 
     /**
      * Constructor pulls file out of the jar or reads from disk and sets up refresh policy.
-     * 
-     * @param expressionEngine
-     *            the expression engine to use. Null results in default expression engine
+     *
      */
     private void readConfig() {
         try {
             XPathExpressionEngine expressionEngine = new XPathExpressionEngine();
-            if (reloadingStrategy == null) {
-                reloadingStrategy = new FileChangedReloadingStrategy();
-                reloadingStrategy.setRefreshDelay(0);
-            }
 
             File configFile = new File(configPath);
             System.out.println(configFile.getAbsolutePath());
             if (configFile.exists() && configFile.isFile()) {
                 try {
-                    config = new XMLConfiguration(configFile);
+                    XMLConfig = new ReloadingFileBasedConfigurationBuilder<>(XMLConfiguration.class)
+                            .configure(new Parameters().xml().setFile(configFile).setExpressionEngine(expressionEngine))
+                            .getConfiguration();
                 } catch (Exception e) {
                     LOG.error("Error parsing configFile " + configFile.getAbsolutePath() + ": " + e, e);
                 }
             }
-            if (config == null) {
+            if (XMLConfig == null) {
                 // Load a default from the classpath:
                 LOG.info("Reading default configuration " + DEFAULT_CONFIG + " from classpath...");
                 // Note: we don't let new XMLConfiguration() lookup the resource
@@ -175,32 +158,18 @@ public class CommonsProxyConfiguration implements ProxyConfiguration {
                 if (configResourceUrl == null) {
                     throw new RuntimeException("unable to load resource: " + configPath);
                 }
-
-                config = new XMLConfiguration(configResourceUrl);
-                // // Copy over a default configuration since none exists:
-                // // Ensure data dir location exists:
-                // configFile = new File(DEFAULT_CONFIG);
-                // // if (!configFile.getParentFile().exists() && !configFile.getParentFile().mkdirs()) {
-                // // throw new RuntimeException("could not create directories.");
-                // // }
-                // LOG.info("Saving default configuration to file " + configFile.getAbsolutePath());
-                // config.save(configFile);
+                XMLConfig = new ReloadingFileBasedConfigurationBuilder<>(XMLConfiguration.class)
+                        .configure(new Parameters().xml().setURL(configResourceUrl).setExpressionEngine(expressionEngine))
+                        .getConfiguration();
             }
-
-            if (expressionEngine != null) {
-                config.setExpressionEngine(expressionEngine);
-            }
-
-            // reload at most once per thirty seconds on configuration queries.
-            config.setReloadingStrategy(reloadingStrategy);
             initConfig();
         } catch (ConfigurationException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void saveConfig(File configFile) throws ConfigurationException {
-        config.save(configFile);
+    public void saveConfig(File configFile) throws ConfigurationException, IOException {
+        XMLConfig.write(new FileWriter(configFile));
     }
 
     /**
@@ -214,18 +183,18 @@ public class CommonsProxyConfiguration implements ProxyConfiguration {
     }
 
     /**
-     * @param string
+     * @param key
      * @return
      */
     private Set<ConfigInclusionExclusionRule> parseInclusionExclusions(String key) {
-        Set<ConfigInclusionExclusionRule> ret = new HashSet<ConfigInclusionExclusionRule>();
-        SubnodeConfiguration groupConfig = config.configurationAt(key);
+        HierarchicalConfiguration<ImmutableNode> groupConfig = XMLConfig.configurationAt(key);
         if (groupConfig != null) {
-            @SuppressWarnings("unchecked") List<HierarchicalConfiguration> list = groupConfig.configurationsAt("rule");
-            ret = list.stream().map(c -> new ConfigInclusionExclusionRule(getTransactionPart(c), c.getString("@header", "all"),
-                    getMatchType(c), c.getString(""))).collect(Collectors.toSet());
+            List<HierarchicalConfiguration<ImmutableNode>> list = groupConfig.configurationsAt("rule");
+            return list.stream()
+                    .map(c -> new ConfigInclusionExclusionRule(getTransactionPart(c), c.getString("@header", "all"),
+                            getMatchType(c), c.getString(""))).collect(Collectors.toSet());
         }
-        return ret;
+        return Set.of();
     }
 
     /**
@@ -262,13 +231,6 @@ public class CommonsProxyConfiguration implements ProxyConfiguration {
         return ret;
     }
 
-    /**
-     * checks if the config needs to be reloaded.
-     */
-    public boolean needsReload() {
-        return (config == null || config.getReloadingStrategy().reloadingRequired());
-    }
-
     public static boolean save(int port, boolean followRedirect, String outputFile,
             Set<ConfigInclusionExclusionRule> inclusions,
             Set<ConfigInclusionExclusionRule> exclusions,
@@ -276,14 +238,14 @@ public class CommonsProxyConfiguration implements ProxyConfiguration {
             Set<ConfigInclusionExclusionRule> bodyExclusions,
             String fileName) {
 
-        ConfigurationNode node = getConfNode("recording-proxy-config", "", false);
-        ConfigurationNode portNode = getConfNode("proxy-port", String.valueOf(port), false);
-        ConfigurationNode followRedirectNode = getConfNode("follow-redirects", Boolean.toString(followRedirect), false);
-        ConfigurationNode outputFileNode = getConfNode("output-file", outputFile, false);
-        ConfigurationNode inclusionsNode = getConfNode("inclusions", "", false);
-        ConfigurationNode exclusionsNode = getConfNode("exclusions", "", false);
-        ConfigurationNode bodyInclusionsNode = getConfNode("body-inclusions", "", false);
-        ConfigurationNode bodyExclusionsNode = getConfNode("body-exclusions", "", false);
+        ImmutableNode node = getConfNode("recording-proxy-config", "", false);
+        ImmutableNode portNode = getConfNode("proxy-port", String.valueOf(port), false);
+        ImmutableNode followRedirectNode = getConfNode("follow-redirects", Boolean.toString(followRedirect), false);
+        ImmutableNode outputFileNode = getConfNode("output-file", outputFile, false);
+        ImmutableNode inclusionsNode = getConfNode("inclusions", "", false);
+        ImmutableNode exclusionsNode = getConfNode("exclusions", "", false);
+        ImmutableNode bodyInclusionsNode = getConfNode("body-inclusions", "", false);
+        ImmutableNode bodyExclusionsNode = getConfNode("body-exclusions", "", false);
 
         updateRuleParentNode(inclusions, inclusionsNode);
         updateRuleParentNode(exclusions, exclusionsNode);
@@ -298,41 +260,36 @@ public class CommonsProxyConfiguration implements ProxyConfiguration {
         node.addChild(bodyInclusionsNode);
         node.addChild(bodyExclusionsNode);
 
-        HierarchicalConfiguration hc = new HierarchicalConfiguration();
-        hc.setRootNode(node);
-        XMLConfiguration xmlConfiguration = new XMLConfiguration(hc);
-        xmlConfiguration.setRootNode(node);
+        XMLConfiguration xmlConfiguration = new XMLConfiguration();
+        xmlConfiguration.addNodes("root", Collections.singleton(node));
 
         try {
 
-            xmlConfiguration.save(new File(fileName));
-        } catch (ConfigurationException e) {
+            xmlConfiguration.write(new FileWriter(fileName));
+        } catch (ConfigurationException | IOException e) {
             e.printStackTrace();
         }
         return true;
 
     }
 
-    public static void updateRuleParentNode(Set<ConfigInclusionExclusionRule> rule, ConfigurationNode parentNode) {
+    public static void updateRuleParentNode(Set<ConfigInclusionExclusionRule> rule, ImmutableNode parentNode) {
         for (ConfigInclusionExclusionRule configInclusionExclusionRule : rule) {
-            ConfigurationNode ruleNode = getConfNode("rule", configInclusionExclusionRule.getValue(), false);
-            ConfigurationNode checkNode = getConfNode("check", configInclusionExclusionRule.getTransactionPart()
-                    .toString(), true);
-            ConfigurationNode matchNode = getConfNode("match", configInclusionExclusionRule.getMatch().toString(), true);
-            ConfigurationNode headerNode = getConfNode("header", configInclusionExclusionRule.getHeader(), true);
+            ImmutableNode ruleNode = getConfNode("rule", configInclusionExclusionRule.getValue(), false);
+            ImmutableNode checkNode = getConfNode("check", configInclusionExclusionRule.getTransactionPart().toString(), true);
+            ImmutableNode matchNode = getConfNode("match", configInclusionExclusionRule.getMatch().toString(), true);
+            ImmutableNode headerNode = getConfNode("header", configInclusionExclusionRule.getHeader(), true);
 
-            ruleNode.addAttribute(checkNode);
-            ruleNode.addAttribute(matchNode);
-            ruleNode.addAttribute(headerNode);
+            ruleNode.addChild(checkNode);
+            ruleNode.addChild(matchNode);
+            ruleNode.addChild(headerNode);
 
             parentNode.addChild(ruleNode);
         }
     }
 
-    public static ConfigurationNode getConfNode(String name, String value, boolean attributeFlag) {
-        ConfigurationNode confNode = new HierarchicalConfiguration.Node(name, value);
-        confNode.setAttribute(attributeFlag);
-        return confNode;
+    private static ImmutableNode getConfNode(String name, String value, boolean attributeFlag) {
+        return new ImmutableNode.Builder().addAttribute(name, value).create();
     }
 
 }

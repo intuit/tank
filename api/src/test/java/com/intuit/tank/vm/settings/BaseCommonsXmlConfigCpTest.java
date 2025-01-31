@@ -15,12 +15,10 @@ package com.intuit.tank.vm.settings;
 
 import java.io.File;
 
-import org.apache.commons.configuration.HierarchicalConfiguration;
-import org.apache.commons.configuration.XMLConfiguration;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.XMLConfiguration;
+import org.apache.commons.configuration2.builder.BasicConfigurationBuilder;
 import org.junit.jupiter.api.*;
-
-import com.intuit.tank.vm.settings.BaseCommonsXmlConfig;
-import com.intuit.tank.vm.settings.MailMessageConfig;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -42,40 +40,9 @@ public class BaseCommonsXmlConfigCpTest {
     public void testCheckReload_1()
             throws Exception {
         MailMessageConfig fixture = new MailMessageConfig();
-        fixture.config = new XMLConfiguration();
+        fixture.XMLConfig = new XMLConfiguration();
         fixture.configFile = new File("");
-
-        fixture.checkReload();
-
-        // An unexpected exception was thrown in user code while executing this test:
-        // java.lang.SecurityException: Cannot write to files while generating test cases
-        // at
-        // com.instantiations.assist.eclipse.junit.CodeProJUnitSecurityManager.checkWrite(CodeProJUnitSecurityManager.java:76)
-        // at java.io.FileOutputStream.<init>(FileOutputStream.java:209)
-        // at java.io.FileOutputStream.<init>(FileOutputStream.java:171)
-        // at org.apache.commons.configuration.AbstractFileConfiguration.save(AbstractFileConfiguration.java:490)
-        // at
-        // org.apache.commons.configuration.AbstractHierarchicalFileConfiguration.save(AbstractHierarchicalFileConfiguration.java:204)
-        // at com.intuit.tank.settings.BaseCommonsXmlConfig.readConfig(BaseCommonsXmlConfig.java:63)
-        // at com.intuit.tank.settings.MailMessageConfig.<init>(MailMessageConfig.java:71)
-    }
-
-    /**
-     * Run the void checkReload() method test.
-     * 
-     * @throws Exception
-     * 
-     * @generatedBy CodePro at 9/3/14 3:44 PM
-     */
-    @Test
-    public void testCheckReload_2()
-            throws Exception {
-        MailMessageConfig fixture = new MailMessageConfig();
-        fixture.config = new XMLConfiguration();
-        fixture.configFile = new File("");
-
-        fixture.checkReload();
-
+        
         // An unexpected exception was thrown in user code while executing this test:
         // java.lang.SecurityException: Cannot write to files while generating test cases
         // at
@@ -100,10 +67,8 @@ public class BaseCommonsXmlConfigCpTest {
     public void testCheckReload_3()
             throws Exception {
         MailMessageConfig fixture = new MailMessageConfig();
-        fixture.config = null;
+        fixture.XMLConfig = null;
         fixture.configFile = new File("");
-
-        fixture.checkReload();
 
         // An unexpected exception was thrown in user code while executing this test:
         // java.lang.SecurityException: Cannot write to files while generating test cases
@@ -146,17 +111,13 @@ public class BaseCommonsXmlConfigCpTest {
     @Test
     public void testGetChildConfigurationAt_2()
             throws Exception {
-        HierarchicalConfiguration config = new HierarchicalConfiguration();
+        HierarchicalConfiguration config = new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration();
         String key = "";
 
         HierarchicalConfiguration result = BaseCommonsXmlConfig.getChildConfigurationAt(config, key);
 
         assertNotNull(result);
         assertEquals(true, result.isEmpty());
-        assertEquals(false, result.isDelimiterParsingDisabled());
-        assertEquals(',', result.getListDelimiter());
-        assertEquals(false, result.isThrowExceptionOnMissing());
-        assertEquals(false, result.isDetailEvents());
     }
 
     /**
@@ -169,17 +130,13 @@ public class BaseCommonsXmlConfigCpTest {
     @Test
     public void testGetChildConfigurationAt_3()
             throws Exception {
-        HierarchicalConfiguration config = new HierarchicalConfiguration();
+        HierarchicalConfiguration config = new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration();
         String key = "";
 
         HierarchicalConfiguration result = BaseCommonsXmlConfig.getChildConfigurationAt(config, key);
 
         assertNotNull(result);
         assertEquals(true, result.isEmpty());
-        assertEquals(false, result.isDelimiterParsingDisabled());
-        assertEquals(',', result.getListDelimiter());
-        assertEquals(false, result.isThrowExceptionOnMissing());
-        assertEquals(false, result.isDetailEvents());
     }
 
     /**
@@ -192,17 +149,13 @@ public class BaseCommonsXmlConfigCpTest {
     @Test
     public void testGetChildConfigurationAt_4()
             throws Exception {
-        HierarchicalConfiguration config = new HierarchicalConfiguration();
+        HierarchicalConfiguration config = new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration();
         String key = "";
 
         HierarchicalConfiguration result = BaseCommonsXmlConfig.getChildConfigurationAt(config, key);
 
         assertNotNull(result);
-        assertEquals(true, result.isEmpty());
-        assertEquals(false, result.isDelimiterParsingDisabled());
-        assertEquals(',', result.getListDelimiter());
-        assertEquals(false, result.isThrowExceptionOnMissing());
-        assertEquals(false, result.isDetailEvents());
+        assertTrue(result.isEmpty());
     }
 
     /**
@@ -216,7 +169,7 @@ public class BaseCommonsXmlConfigCpTest {
     public void testGetConfig_1()
             throws Exception {
         MailMessageConfig fixture = new MailMessageConfig();
-        fixture.config = new XMLConfiguration();
+        fixture.XMLConfig = new XMLConfiguration();
         fixture.configFile = new File("");
 
         XMLConfiguration result = fixture.getConfig();
@@ -246,7 +199,7 @@ public class BaseCommonsXmlConfigCpTest {
     public void testGetSourceConfigFile_1()
             throws Exception {
         MailMessageConfig fixture = new MailMessageConfig();
-        fixture.config = new XMLConfiguration();
+        fixture.XMLConfig = new XMLConfiguration();
         fixture.configFile = new File("");
 
         File result = fixture.getSourceConfigFile();
@@ -266,96 +219,6 @@ public class BaseCommonsXmlConfigCpTest {
     }
 
     /**
-     * Run the boolean needsReload() method test.
-     * 
-     * @throws Exception
-     * 
-     * @generatedBy CodePro at 9/3/14 3:44 PM
-     */
-    @Test
-    public void testNeedsReload_1()
-            throws Exception {
-        MailMessageConfig fixture = new MailMessageConfig();
-        fixture.config = null;
-        fixture.configFile = new File("");
-
-        boolean result = fixture.needsReload();
-
-        // An unexpected exception was thrown in user code while executing this test:
-        // java.lang.SecurityException: Cannot write to files while generating test cases
-        // at
-        // com.instantiations.assist.eclipse.junit.CodeProJUnitSecurityManager.checkWrite(CodeProJUnitSecurityManager.java:76)
-        // at java.io.FileOutputStream.<init>(FileOutputStream.java:209)
-        // at java.io.FileOutputStream.<init>(FileOutputStream.java:171)
-        // at org.apache.commons.configuration.AbstractFileConfiguration.save(AbstractFileConfiguration.java:490)
-        // at
-        // org.apache.commons.configuration.AbstractHierarchicalFileConfiguration.save(AbstractHierarchicalFileConfiguration.java:204)
-        // at com.intuit.tank.settings.BaseCommonsXmlConfig.readConfig(BaseCommonsXmlConfig.java:63)
-        // at com.intuit.tank.settings.MailMessageConfig.<init>(MailMessageConfig.java:71)
-        assertTrue(result);
-    }
-
-    /**
-     * Run the boolean needsReload() method test.
-     * 
-     * @throws Exception
-     * 
-     * @generatedBy CodePro at 9/3/14 3:44 PM
-     */
-    @Test
-    public void testNeedsReload_2()
-            throws Exception {
-        MailMessageConfig fixture = new MailMessageConfig();
-        fixture.config = new XMLConfiguration();
-        fixture.configFile = new File("");
-
-        boolean result = fixture.needsReload();
-
-        // An unexpected exception was thrown in user code while executing this test:
-        // java.lang.SecurityException: Cannot write to files while generating test cases
-        // at
-        // com.instantiations.assist.eclipse.junit.CodeProJUnitSecurityManager.checkWrite(CodeProJUnitSecurityManager.java:76)
-        // at java.io.FileOutputStream.<init>(FileOutputStream.java:209)
-        // at java.io.FileOutputStream.<init>(FileOutputStream.java:171)
-        // at org.apache.commons.configuration.AbstractFileConfiguration.save(AbstractFileConfiguration.java:490)
-        // at
-        // org.apache.commons.configuration.AbstractHierarchicalFileConfiguration.save(AbstractHierarchicalFileConfiguration.java:204)
-        // at com.intuit.tank.settings.BaseCommonsXmlConfig.readConfig(BaseCommonsXmlConfig.java:63)
-        // at com.intuit.tank.settings.MailMessageConfig.<init>(MailMessageConfig.java:71)
-        assertFalse(result);
-    }
-
-    /**
-     * Run the boolean needsReload() method test.
-     * 
-     * @throws Exception
-     * 
-     * @generatedBy CodePro at 9/3/14 3:44 PM
-     */
-    @Test
-    public void testNeedsReload_3()
-            throws Exception {
-        MailMessageConfig fixture = new MailMessageConfig();
-        fixture.config = new XMLConfiguration();
-        fixture.configFile = new File("");
-
-        boolean result = fixture.needsReload();
-
-        // An unexpected exception was thrown in user code while executing this test:
-        // java.lang.SecurityException: Cannot write to files while generating test cases
-        // at
-        // com.instantiations.assist.eclipse.junit.CodeProJUnitSecurityManager.checkWrite(CodeProJUnitSecurityManager.java:76)
-        // at java.io.FileOutputStream.<init>(FileOutputStream.java:209)
-        // at java.io.FileOutputStream.<init>(FileOutputStream.java:171)
-        // at org.apache.commons.configuration.AbstractFileConfiguration.save(AbstractFileConfiguration.java:490)
-        // at
-        // org.apache.commons.configuration.AbstractHierarchicalFileConfiguration.save(AbstractHierarchicalFileConfiguration.java:204)
-        // at com.intuit.tank.settings.BaseCommonsXmlConfig.readConfig(BaseCommonsXmlConfig.java:63)
-        // at com.intuit.tank.settings.MailMessageConfig.<init>(MailMessageConfig.java:71)
-        assertFalse(result);
-    }
-
-    /**
      * Run the void readConfig() method test.
      * 
      * @throws Exception
@@ -366,7 +229,7 @@ public class BaseCommonsXmlConfigCpTest {
     public void testReadConfig_1()
             throws Exception {
         MailMessageConfig fixture = new MailMessageConfig();
-        fixture.config = new XMLConfiguration();
+        fixture.XMLConfig = new XMLConfiguration();
         fixture.configFile = new File("");
 
         fixture.readConfig();
@@ -395,7 +258,7 @@ public class BaseCommonsXmlConfigCpTest {
     public void testReadConfig_2()
             throws Exception {
         MailMessageConfig fixture = new MailMessageConfig();
-        fixture.config = new XMLConfiguration();
+        fixture.XMLConfig = new XMLConfiguration();
         fixture.configFile = new File("");
 
         fixture.readConfig();
@@ -424,7 +287,7 @@ public class BaseCommonsXmlConfigCpTest {
     public void testReadConfig_3()
             throws Exception {
         MailMessageConfig fixture = new MailMessageConfig();
-        fixture.config = new XMLConfiguration();
+        fixture.XMLConfig = new XMLConfiguration();
         fixture.configFile = new File("");
 
         fixture.readConfig();
@@ -453,7 +316,7 @@ public class BaseCommonsXmlConfigCpTest {
     public void testReadConfig_4()
             throws Exception {
         MailMessageConfig fixture = new MailMessageConfig();
-        fixture.config = new XMLConfiguration();
+        fixture.XMLConfig = new XMLConfiguration();
         fixture.configFile = new File("");
 
         fixture.readConfig();
@@ -482,7 +345,7 @@ public class BaseCommonsXmlConfigCpTest {
     public void testReadConfig_5()
             throws Exception {
         MailMessageConfig fixture = new MailMessageConfig();
-        fixture.config = new XMLConfiguration();
+        fixture.XMLConfig = new XMLConfiguration();
         fixture.configFile = new File("");
 
         fixture.readConfig();
@@ -511,7 +374,7 @@ public class BaseCommonsXmlConfigCpTest {
     public void testReadConfig_6()
             throws Exception {
         MailMessageConfig fixture = new MailMessageConfig();
-        fixture.config = new XMLConfiguration();
+        fixture.XMLConfig = new XMLConfiguration();
         fixture.configFile = new File("");
 
         fixture.readConfig();
@@ -540,7 +403,7 @@ public class BaseCommonsXmlConfigCpTest {
     public void testReadConfig_7()
             throws Exception {
         MailMessageConfig fixture = new MailMessageConfig();
-        fixture.config = new XMLConfiguration();
+        fixture.XMLConfig = new XMLConfiguration();
         fixture.configFile = new File("");
 
         fixture.readConfig();
@@ -569,7 +432,7 @@ public class BaseCommonsXmlConfigCpTest {
     public void testReadConfig_8()
             throws Exception {
         MailMessageConfig fixture = new MailMessageConfig();
-        fixture.config = new XMLConfiguration();
+        fixture.XMLConfig = new XMLConfiguration();
         fixture.configFile = new File("");
 
         fixture.readConfig();
@@ -598,7 +461,7 @@ public class BaseCommonsXmlConfigCpTest {
     public void testReadConfig_9()
             throws Exception {
         MailMessageConfig fixture = new MailMessageConfig();
-        fixture.config = new XMLConfiguration();
+        fixture.XMLConfig = new XMLConfiguration();
         fixture.configFile = new File("");
 
         fixture.readConfig();
@@ -627,7 +490,7 @@ public class BaseCommonsXmlConfigCpTest {
     public void testReadConfig_10()
             throws Exception {
         MailMessageConfig fixture = new MailMessageConfig();
-        fixture.config = new XMLConfiguration();
+        fixture.XMLConfig = new XMLConfiguration();
         fixture.configFile = new File("");
 
         fixture.readConfig();
@@ -656,7 +519,7 @@ public class BaseCommonsXmlConfigCpTest {
     public void testReadConfig_11()
             throws Exception {
         MailMessageConfig fixture = new MailMessageConfig();
-        fixture.config = new XMLConfiguration();
+        fixture.XMLConfig = new XMLConfiguration();
         fixture.configFile = new File("");
 
         fixture.readConfig();
@@ -685,7 +548,7 @@ public class BaseCommonsXmlConfigCpTest {
     public void testReadConfig_12()
             throws Exception {
         MailMessageConfig fixture = new MailMessageConfig();
-        fixture.config = new XMLConfiguration();
+        fixture.XMLConfig = new XMLConfiguration();
         fixture.configFile = new File("");
 
         fixture.readConfig();
@@ -714,7 +577,7 @@ public class BaseCommonsXmlConfigCpTest {
     public void testReadConfig_13()
             throws Exception {
         MailMessageConfig fixture = new MailMessageConfig();
-        fixture.config = new XMLConfiguration();
+        fixture.XMLConfig = new XMLConfiguration();
         fixture.configFile = new File("");
 
         fixture.readConfig();
@@ -743,7 +606,7 @@ public class BaseCommonsXmlConfigCpTest {
     public void testReadConfig_14()
             throws Exception {
         MailMessageConfig fixture = new MailMessageConfig();
-        fixture.config = new XMLConfiguration();
+        fixture.XMLConfig = new XMLConfiguration();
         fixture.configFile = new File("");
 
         fixture.readConfig();

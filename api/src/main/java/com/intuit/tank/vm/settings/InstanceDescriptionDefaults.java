@@ -19,7 +19,7 @@ package com.intuit.tank.vm.settings;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.commons.configuration.HierarchicalConfiguration;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
 
 /**
  * InstanceDescription

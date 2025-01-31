@@ -29,7 +29,7 @@
 	<!-- Locations used for informational purposes only. -->
 	<locations>
 		<location displayName="Unspecified" name="unspecified" />
-		<location displayName="San Diego\, CA" name="san_diego" />
+		<location displayName="San Diego, CA" name="san_diego" />
 	</locations>
 	<!-- mail configuration for notifications -->
 	<mail>
@@ -334,7 +334,7 @@ function toJsonObj(text) {
 
 function toJsonString(jsonObj) {
     try {
-        return JSON.stringify(jsonObj\, null\, '\t');
+        return JSON.stringify(jsonObj, null, '\t');
     } catch(e) {
         error("Error converting json to string json: " + e);
     }
@@ -405,8 +405,8 @@ function getVariable(key) {
  * @param value
  *            the value to set it to
  */
-function setVariable(key\, value) {
-    ioBean.getInput("variables").addVariable(key\, value);
+function setVariable(key, value) {
+    ioBean.getInput("variables").addVariable(key, value);
 }
 
 //######## Result functions ##########
@@ -415,7 +415,7 @@ function setVariable(key\, value) {
  * jump to a group within the script with the specified name.
  * 
  * @param groupName
- *            the name of the group to go to. if the group does not exist\, it
+ *            the name of the group to go to. if the group does not exist, it
  *            skips to next script.
  */
 function gotoGroup(groupName) {
@@ -464,7 +464,7 @@ function terminateUser() {
  * sets the action in the output.
  */
 function setAction(action) {
-    ioBean.setOutput("action"\, action);
+    ioBean.setOutput("action", action);
 }
 
 ]]>

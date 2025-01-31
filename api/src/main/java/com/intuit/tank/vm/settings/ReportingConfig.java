@@ -19,8 +19,7 @@ package com.intuit.tank.vm.settings;
 import java.io.Serializable;
 import jakarta.annotation.Nonnull;
 
-import org.apache.commons.configuration.HierarchicalConfiguration;
-import org.apache.commons.configuration.SubnodeConfiguration;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -55,7 +54,7 @@ public class ReportingConfig implements Serializable {
         String ret = DEFAULT_REPORTER;
         if (config != null) {
             try {
-                SubnodeConfiguration configurationAt = config.configurationAt(KEY_REPORTER);
+                HierarchicalConfiguration configurationAt = config.configurationAt(KEY_REPORTER);
                 String string = configurationAt.getString("");
                 if (StringUtils.isNotBlank(string)) {
                     ret = string;
@@ -76,7 +75,7 @@ public class ReportingConfig implements Serializable {
         String ret = DEFAULT_READER;
         if (config != null) {
             try {
-                SubnodeConfiguration configurationAt = config.configurationAt(KEY_READER);
+                HierarchicalConfiguration configurationAt = config.configurationAt(KEY_READER);
                 String string = configurationAt.getString("");
                 if (StringUtils.isNotBlank(string)) {
                     ret = string;

@@ -15,7 +15,9 @@ package com.intuit.tank.vm.settings;
 
 import java.util.List;
 
-import org.apache.commons.configuration.HierarchicalConfiguration;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.XMLConfiguration;
+import org.apache.commons.configuration2.builder.BasicConfigurationBuilder;
 import org.junit.jupiter.api.*;
 
 import com.intuit.tank.vm.settings.LocationsConfig;
@@ -39,7 +41,7 @@ public class LocationsConfigCpTest {
     @Test
     public void testLocationsConfig_1()
             throws Exception {
-        HierarchicalConfiguration config = new HierarchicalConfiguration();
+        HierarchicalConfiguration config = new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration();
 
         LocationsConfig result = new LocationsConfig(config);
 
@@ -56,7 +58,7 @@ public class LocationsConfigCpTest {
     @Test
     public void testGetLocations_1()
             throws Exception {
-        LocationsConfig fixture = new LocationsConfig(new HierarchicalConfiguration());
+        LocationsConfig fixture = new LocationsConfig(new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration());
 
         List<SelectableItem> result = fixture.getLocations();
 

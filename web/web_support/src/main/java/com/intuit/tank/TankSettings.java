@@ -63,9 +63,6 @@ public class TankSettings implements Serializable {
      */
     public boolean hasRegionConfigured(String region) {
         boolean ret = false;
-        if (config.needsReload()) {
-            init();
-        }
         try {
             ret = regions.stream().anyMatch(r -> r.name().equalsIgnoreCase(region));
         } catch (Exception e) {
@@ -79,9 +76,6 @@ public class TankSettings implements Serializable {
      * @return
      */
     public List<VMRegion> getVmRegions() {
-        if (config.needsReload()) {
-            init();
-        }
         return regions;
     }
 

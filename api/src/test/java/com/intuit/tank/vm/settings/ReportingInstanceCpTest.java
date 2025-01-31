@@ -13,7 +13,9 @@ package com.intuit.tank.vm.settings;
  * #L%
  */
 
-import org.apache.commons.configuration.HierarchicalConfiguration;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.XMLConfiguration;
+import org.apache.commons.configuration2.builder.BasicConfigurationBuilder;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -37,8 +39,8 @@ public class ReportingInstanceCpTest {
     @Test
     public void testReportingInstance_1()
             throws Exception {
-        HierarchicalConfiguration config = new HierarchicalConfiguration();
-        HierarchicalConfiguration defaultInstance = new HierarchicalConfiguration();
+        HierarchicalConfiguration config = new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration();
+        HierarchicalConfiguration defaultInstance = new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration();
 
         ReportingInstance result = new ReportingInstance(config, defaultInstance);
 
@@ -65,8 +67,8 @@ public class ReportingInstanceCpTest {
     @Test
     public void testGetRegion_1()
             throws Exception {
-        ReportingInstance fixture = new ReportingInstance(new HierarchicalConfiguration(),
-                new HierarchicalConfiguration());
+        ReportingInstance fixture = new ReportingInstance(new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration(),
+                new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration());
 
         VMRegion result = fixture.getRegion();
 
@@ -87,8 +89,8 @@ public class ReportingInstanceCpTest {
     @Test
     public void testGetRegion_2()
             throws Exception {
-        ReportingInstance fixture = new ReportingInstance(new HierarchicalConfiguration(),
-                new HierarchicalConfiguration());
+        ReportingInstance fixture = new ReportingInstance(new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration(),
+                new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration());
 
         VMRegion result = fixture.getRegion();
 
@@ -109,8 +111,8 @@ public class ReportingInstanceCpTest {
     @Test
     public void testGetReportingMode_1()
             throws Exception {
-        ReportingInstance fixture = new ReportingInstance(new HierarchicalConfiguration(),
-                new HierarchicalConfiguration());
+        ReportingInstance fixture = new ReportingInstance(new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration(),
+                new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration());
 
         String result = fixture.getReportingMode();
 
@@ -127,8 +129,8 @@ public class ReportingInstanceCpTest {
     @Test
     public void testGetReportingMode_2()
             throws Exception {
-        ReportingInstance fixture = new ReportingInstance(new HierarchicalConfiguration(),
-                new HierarchicalConfiguration());
+        ReportingInstance fixture = new ReportingInstance(new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration(),
+                new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration());
 
         String result = fixture.getReportingMode();
 
@@ -145,8 +147,8 @@ public class ReportingInstanceCpTest {
     @Test
     public void testGetReuseInstances_1()
             throws Exception {
-        ReportingInstance fixture = new ReportingInstance(new HierarchicalConfiguration(),
-                new HierarchicalConfiguration());
+        ReportingInstance fixture = new ReportingInstance(new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration(),
+                new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration());
 
         boolean result = fixture.getReuseInstances();
 
@@ -163,8 +165,8 @@ public class ReportingInstanceCpTest {
     @Test
     public void testGetReuseInstances_2()
             throws Exception {
-        ReportingInstance fixture = new ReportingInstance(new HierarchicalConfiguration(),
-                new HierarchicalConfiguration());
+        ReportingInstance fixture = new ReportingInstance(new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration(),
+                new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration());
 
         boolean result = fixture.getReuseInstances();
 
@@ -181,8 +183,8 @@ public class ReportingInstanceCpTest {
     @Test
     public void testGetZone_1()
             throws Exception {
-        ReportingInstance fixture = new ReportingInstance(new HierarchicalConfiguration(),
-                new HierarchicalConfiguration());
+        ReportingInstance fixture = new ReportingInstance(new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration(),
+                new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration());
 
         String result = fixture.getZone();
 
@@ -199,8 +201,8 @@ public class ReportingInstanceCpTest {
     @Test
     public void testIsRegionDependent_1()
             throws Exception {
-        ReportingInstance fixture = new ReportingInstance(new HierarchicalConfiguration(),
-                new HierarchicalConfiguration());
+        ReportingInstance fixture = new ReportingInstance(new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration(),
+                new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration());
 
         boolean result = fixture.isRegionDependent();
 
@@ -217,8 +219,8 @@ public class ReportingInstanceCpTest {
     @Test
     public void testIsRegionDependent_2()
             throws Exception {
-        ReportingInstance fixture = new ReportingInstance(new HierarchicalConfiguration(),
-                new HierarchicalConfiguration());
+        ReportingInstance fixture = new ReportingInstance(new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration(),
+                new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration());
 
         boolean result = fixture.isRegionDependent();
 
@@ -235,8 +237,8 @@ public class ReportingInstanceCpTest {
     @Test
     public void testToString_1()
             throws Exception {
-        ReportingInstance fixture = new ReportingInstance(new HierarchicalConfiguration(),
-                new HierarchicalConfiguration());
+        ReportingInstance fixture = new ReportingInstance(new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration(),
+                new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration());
 
         String result = fixture.toString();
 

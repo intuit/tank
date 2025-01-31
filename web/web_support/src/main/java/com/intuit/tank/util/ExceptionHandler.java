@@ -25,8 +25,7 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang.WordUtils;
-import com.intuit.tank.util.Messages;
+import org.apache.commons.text.WordUtils;
 
 /**
  * RestExceptionHandler

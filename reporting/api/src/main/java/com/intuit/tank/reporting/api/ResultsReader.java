@@ -6,7 +6,7 @@ import java.util.Map;
 
 import jakarta.annotation.Nonnull;
 
-import org.apache.commons.configuration.HierarchicalConfiguration;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
 
 import com.intuit.tank.results.TankResult;
 

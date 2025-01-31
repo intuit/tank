@@ -16,7 +16,7 @@ package com.intuit.tank.vm.settings;
  * #L%
  */
 
-import org.apache.commons.configuration.HierarchicalConfiguration;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.lang3.StringUtils;
 
 import com.intuit.tank.harness.AmazonUtil;

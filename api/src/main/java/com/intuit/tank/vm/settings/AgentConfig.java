@@ -27,7 +27,7 @@ import java.util.Set;
 
 import jakarta.annotation.Nonnull;
 
-import org.apache.commons.configuration.HierarchicalConfiguration;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

@@ -29,8 +29,7 @@ import java.util.stream.Collectors;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
-import org.apache.commons.configuration.HierarchicalConfiguration;
-import org.apache.commons.configuration.SubnodeConfiguration;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -294,8 +293,7 @@ public class VmManagerConfig implements Serializable {
     }
 
     /**
-     * 
-     * @param defaultResult
+     *
      * @return
      */
     public boolean isUseElasticIps() {
@@ -328,7 +326,7 @@ public class VmManagerConfig implements Serializable {
      * @return
      */
     InstanceDescriptionDefaults getInstanceDefaults() {
-        SubnodeConfiguration c = config.configurationAt("default-instance-description");
+        HierarchicalConfiguration c = config.configurationAt("default-instance-description");
         return new InstanceDescriptionDefaults(c, c);
     }
 

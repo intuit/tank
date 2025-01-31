@@ -56,7 +56,7 @@ function toJsonObj(text) {
 
 function toJsonString(jsonObj) {
 	try {
-		return JSON.stringify(jsonObj\, null\, '\t');
+		return JSON.stringify(jsonObj, null, '\t');
 	} catch(e) {
 		error("Error converting json to string json: " + e);
 	}
@@ -127,8 +127,8 @@ function getVariable(key) {
  * @param value
  *            the value to set it to
  */
-function setVariable(key\, value) {
-	ioBean.getInput("variables").addVariable(key\, value);
+function setVariable(key, value) {
+	ioBean.getInput("variables").addVariable(key, value);
 }
 
 //######## Result functions ##########
@@ -186,7 +186,7 @@ function terminateUser() {
  * sets the action in the output.
  */
 function setAction(action) {
-	ioBean.setOutput("action"\, action);
+	ioBean.setOutput("action", action);
 }
 
 

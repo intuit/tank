@@ -13,10 +13,10 @@ package com.intuit.tank.vm.settings;
  * #L%
  */
 
-import org.apache.commons.configuration.HierarchicalConfiguration;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.XMLConfiguration;
+import org.apache.commons.configuration2.builder.BasicConfigurationBuilder;
 import org.junit.jupiter.api.*;
-
-import com.intuit.tank.vm.settings.MailConfig;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,7 +36,7 @@ public class MailConfigCpTest {
     @Test
     public void testMailConfig_1()
             throws Exception {
-        HierarchicalConfiguration config = new HierarchicalConfiguration();
+        HierarchicalConfiguration config = new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration();
 
         MailConfig result = new MailConfig(config);
 
@@ -58,7 +58,7 @@ public class MailConfigCpTest {
     @Test
     public void testGetMailFrom_1()
             throws Exception {
-        MailConfig fixture = new MailConfig(new HierarchicalConfiguration());
+        MailConfig fixture = new MailConfig(new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration());
 
         String result = fixture.getMailFrom();
 
@@ -75,7 +75,7 @@ public class MailConfigCpTest {
     @Test
     public void testGetSmtpHost_1()
             throws Exception {
-        MailConfig fixture = new MailConfig(new HierarchicalConfiguration());
+        MailConfig fixture = new MailConfig(new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration());
 
         String result = fixture.getSmtpHost();
 
@@ -92,7 +92,7 @@ public class MailConfigCpTest {
     @Test
     public void testGetSmtpPort_1()
             throws Exception {
-        MailConfig fixture = new MailConfig(new HierarchicalConfiguration());
+        MailConfig fixture = new MailConfig(new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration());
 
         String result = fixture.getSmtpPort();
 

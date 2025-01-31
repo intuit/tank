@@ -13,19 +13,20 @@ package com.intuit.tank.vm.settings;
  * #L%
  */
 
-import java.io.File;
-import java.io.Serializable;
+import java.io.*;
 import java.net.URL;
 import java.util.List;
 
 import jakarta.annotation.Nonnull;
 
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.HierarchicalConfiguration;
-import org.apache.commons.configuration.XMLConfiguration;
-import org.apache.commons.configuration.reloading.FileChangedReloadingStrategy;
-import org.apache.commons.configuration.tree.ExpressionEngine;
-import org.apache.commons.configuration.tree.xpath.XPathExpressionEngine;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.XMLConfiguration;
+import org.apache.commons.configuration2.builder.ReloadingFileBasedConfigurationBuilder;
+import org.apache.commons.configuration2.builder.fluent.Parameters;
+import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.apache.commons.configuration2.reloading.ReloadingController;
+import org.apache.commons.configuration2.tree.ExpressionEngine;
+import org.apache.commons.configuration2.tree.xpath.XPathExpressionEngine;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -40,20 +41,18 @@ public abstract class BaseCommonsXmlConfig implements Serializable {
 
     private static final Logger LOG = LogManager.getLogger(BaseCommonsXmlConfig.class);
 
-    protected XMLConfiguration config;
+    protected XMLConfiguration XMLConfig;
+
     protected File configFile;
 
     /**
      * Constructor pulls file out of the jar or reads from disk and sets up refresh policy.
-     * 
-     * @param expressionEngine
-     *            the expression engine to use. Null results in default expression engine
+     *
      */
     protected void readConfig() {
         try {
             ExpressionEngine expressionEngine = new XPathExpressionEngine();
             String configPath = getConfigName();
-            FileChangedReloadingStrategy reloadingStrategy = new FileChangedReloadingStrategy();
 
             File dataDirConfigFile = new File(configPath);
 //            LOG.info("Reading settings from " + dataDirConfigFile.getAbsolutePath());
@@ -67,32 +66,37 @@ public abstract class BaseCommonsXmlConfig implements Serializable {
                     throw new RuntimeException("unable to load resource: " + configPath);
                 }
 
-                XMLConfiguration tmpConfig = new XMLConfiguration(configResourceUrl);
+                XMLConfiguration tmpConfig = new ReloadingFileBasedConfigurationBuilder<XMLConfiguration>(XMLConfiguration.class)
+                        .configure(new Parameters().xml().setURL(configResourceUrl))
+                        .getConfiguration();
+
                 // Copy over a default configuration since none exists:
                 // Ensure data dir location exists:
                 if (dataDirConfigFile.getParentFile() != null && !dataDirConfigFile.getParentFile().exists()
                         && !dataDirConfigFile.getParentFile().mkdirs()) {
                     throw new RuntimeException("could not create directories.");
                 }
-                tmpConfig.save(dataDirConfigFile);
+                tmpConfig.write(new FileWriter(dataDirConfigFile));
                 LOG.info("Saving settings file to " + dataDirConfigFile.getAbsolutePath());
             }
 
             if (dataDirConfigFile.exists()) {
-                config = new XMLConfiguration(dataDirConfigFile);
+                XMLConfig = new ReloadingFileBasedConfigurationBuilder<XMLConfiguration>(XMLConfiguration.class)
+                        .configure(new Parameters().xml().setFile(dataDirConfigFile))
+                        .getConfiguration();
             } else {
                 // extract from jar and write to
                 throw new IllegalStateException("Config file does not exist or cannot be created");
             }
             if (expressionEngine != null) {
-                config.setExpressionEngine(expressionEngine);
+                XMLConfig.setExpressionEngine(expressionEngine);
             }
             configFile = dataDirConfigFile;
-            // reload at most once per thirty seconds on configuration queries.
-            config.setReloadingStrategy(reloadingStrategy);
-            initConfig(config);
+            initConfig(XMLConfig);
         } catch (ConfigurationException e) {
             LOG.error("Error reading settings file: " + e, e);
+            throw new RuntimeException(e);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
@@ -119,8 +123,7 @@ public abstract class BaseCommonsXmlConfig implements Serializable {
      * @return the config
      */
     protected XMLConfiguration getConfig() {
-        checkReload();
-        return config;
+        return XMLConfig;
     }
 
     /**
@@ -137,26 +140,5 @@ public abstract class BaseCommonsXmlConfig implements Serializable {
      *            the configuration to initialize from
      */
     protected abstract void initConfig(@Nonnull XMLConfiguration configuration);
-
-    /**
-     * checks if the config needs to be reloaded and calls initConfig on it. should be called if parsing of the config
-     * is needed.
-     */
-    protected synchronized void checkReload() {
-        if (config == null) {
-            readConfig();
-        } else if (config.getReloadingStrategy().reloadingRequired()) {
-            config.reload();
-            initConfig(config);
-            config.getReloadingStrategy().reloadingPerformed();
-        }
-    }
-
-    /**
-     * checks if the config needs to be reloaded.
-     */
-    public boolean needsReload() {
-        return (config == null || config.getReloadingStrategy().reloadingRequired());
-    }
 
 }

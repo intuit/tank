@@ -13,7 +13,9 @@ package com.intuit.tank.vm.settings;
  * #L%
  */
 
-import org.apache.commons.configuration.HierarchicalConfiguration;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.XMLConfiguration;
+import org.apache.commons.configuration2.builder.BasicConfigurationBuilder;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,7 +36,7 @@ public class CloudCredentialsCpTest {
     @Test
     public void testCloudCredentials_1()
             throws Exception {
-        HierarchicalConfiguration config = new HierarchicalConfiguration();
+        HierarchicalConfiguration config = new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration();
 
         CloudCredentials result = new CloudCredentials(config);
 
@@ -55,7 +57,7 @@ public class CloudCredentialsCpTest {
     @Test
     public void testGetKey_1()
             throws Exception {
-        CloudCredentials fixture = new CloudCredentials(new HierarchicalConfiguration());
+        CloudCredentials fixture = new CloudCredentials(new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration());
 
         String result = fixture.getKey();
 
@@ -72,7 +74,7 @@ public class CloudCredentialsCpTest {
     @Test
     public void testGetKeyId_1()
             throws Exception {
-        CloudCredentials fixture = new CloudCredentials(new HierarchicalConfiguration());
+        CloudCredentials fixture = new CloudCredentials(new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration());
 
         String result = fixture.getKeyId();
 
@@ -89,7 +91,7 @@ public class CloudCredentialsCpTest {
     @Test
     public void testGetProxyHost_1()
             throws Exception {
-        CloudCredentials fixture = new CloudCredentials(new HierarchicalConfiguration());
+        CloudCredentials fixture = new CloudCredentials(new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration());
 
         String result = fixture.getProxyHost();
 
@@ -106,7 +108,7 @@ public class CloudCredentialsCpTest {
     @Test
     public void testGetProxyPort_1()
             throws Exception {
-        CloudCredentials fixture = new CloudCredentials(new HierarchicalConfiguration());
+        CloudCredentials fixture = new CloudCredentials(new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration());
 
         String result = fixture.getProxyPort();
 
@@ -123,7 +125,7 @@ public class CloudCredentialsCpTest {
     @Test
     public void testGetType_1()
             throws Exception {
-        CloudCredentials fixture = new CloudCredentials(new HierarchicalConfiguration());
+        CloudCredentials fixture = new CloudCredentials(new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration());
 
         CloudProvider result = fixture.getType();
 

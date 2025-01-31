@@ -17,7 +17,7 @@ import java.io.File;
 
 import jakarta.annotation.Nonnull;
 
-import org.apache.commons.configuration.HierarchicalConfiguration;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
 import org.apache.commons.lang3.StringUtils;
 
 public class SearchConfig {

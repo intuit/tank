@@ -19,7 +19,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
 
 import com.google.common.collect.ImmutableMap;
-import org.apache.commons.configuration.XMLConfiguration;
+import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.message.ObjectMessage;
@@ -111,77 +111,76 @@ public class TankConfig extends BaseCommonsXmlConfig {
      * @return the Datafile storage root dir
      */
     public String getDataFileStorageDir() {
-        return config.getString(KEY_DATA_FILE_STORAGE, "/tmp/tank/datafiles");
+        return XMLConfig.getString(KEY_DATA_FILE_STORAGE, "/tmp/tank/datafiles");
     }
 
     /**
      * @return true if rest security is enabled
      */
     public boolean isRestSecurityEnabled() {
-        return config.getBoolean(KEY_REST_SECURITY_ENABLED, false);
+        return XMLConfig.getBoolean(KEY_REST_SECURITY_ENABLED, false);
     }
 
     /**
      * @return banner text
      */
     public String getTextBanner() {
-        return config.getString(KEY_BANNER_TEXT, "");
+        return XMLConfig.getString(KEY_BANNER_TEXT, "");
     }
 
     /**
      * @return true if rest security is enabled
      */
     public boolean isS3EncryptionEnabled() {
-        return config.getBoolean(KEY_ENCRYPT_S3, false);
+        return XMLConfig.getBoolean(KEY_ENCRYPT_S3, false);
     }
 
     /**
      * @return the Datafile storage root dir
      */
     public boolean getStandalone() {
-        return config.getBoolean(KEY_STANDALONE, false);
+        return XMLConfig.getBoolean(KEY_STANDALONE, false);
     }
 
     /**
      * @return the Datafile storage root dir
      */
     public String getTmpDir() {
-        return config.getString(KEY_TMP_FILE_STORAGE, "/tmp/tank/tmpfiles");
+        return XMLConfig.getString(KEY_TMP_FILE_STORAGE, "/tmp/tank/tmpfiles");
     }
 
     /**
      * @return the Datafile storage root dir
      */
     public String getJarDir() {
-        return config.getString(KEY_JAR_FILE_STORAGE, "/tmp/tank/jars");
+        return XMLConfig.getString(KEY_JAR_FILE_STORAGE, "/tmp/tank/jars");
     }
 
     /**
      * @return the Datafile storage root dir
      */
     public String getTimingDir() {
-        return config.getString(KEY_TIMING_FILE_STORAGE, "/tmp/tank/timing");
+        return XMLConfig.getString(KEY_TIMING_FILE_STORAGE, "/tmp/tank/timing");
     }
 
     /**
      * @return the controller base url
      */
     public String getControllerBase() {
-        return config.getString(KEY_CONTROLLER_BASE, "http://tank.controller/");
+        return XMLConfig.getString(KEY_CONTROLLER_BASE, "http://tank.controller/");
     }
 
     /**
      * @return the controller base url
      */
     public String getInstanceName() {
-        return config.getString(KEY_INSTANCE_NAME, "prod");
+        return XMLConfig.getString(KEY_INSTANCE_NAME, "prod");
     }
 
     /**
      * @return the vmManagerConfig
      */
     public VmManagerConfig getVmManagerConfig() {
-        checkReload();
         return vmManagerConfig;
     }
 
@@ -189,7 +188,6 @@ public class TankConfig extends BaseCommonsXmlConfig {
      * @return the vmManagerConfig
      */
     public AgentConfig getAgentConfig() {
-        checkReload();
         return agentConfig;
     }
 
@@ -197,7 +195,6 @@ public class TankConfig extends BaseCommonsXmlConfig {
      * @return the vmManagerConfig
      */
     public ProductConfig getProductConfig() {
-        checkReload();
         return productConfig;
     }
 
@@ -205,7 +202,6 @@ public class TankConfig extends BaseCommonsXmlConfig {
      * @return the vmManagerConfig
      */
     public LogicStepConfig getLogicStepConfig() {
-        checkReload();
         return logicStepConfig;
     }
 
@@ -213,7 +209,6 @@ public class TankConfig extends BaseCommonsXmlConfig {
      * @return the vmManagerConfig
      */
     public MailConfig getMailConfig() {
-        checkReload();
         return mailConfig;
     }
 
@@ -228,7 +223,6 @@ public class TankConfig extends BaseCommonsXmlConfig {
      * @return the vmManagerConfig
      */
     public SecurityConfig getSecurityConfig() {
-        checkReload();
         return securityConfig;
     }
 
@@ -236,7 +230,6 @@ public class TankConfig extends BaseCommonsXmlConfig {
      * @return the reportingConfig
      */
     public ReportingConfig getReportingConfig() {
-        checkReload();
         return reportingConfig;
     }
 
@@ -244,7 +237,6 @@ public class TankConfig extends BaseCommonsXmlConfig {
      * @return the oidcSsoConfig
      */
     public OidcSsoConfig getOidcSsoConfig() {
-        checkReload();
         return oidcSsoConfig;
     }
 

@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 import jakarta.annotation.Nonnull;
 
-import org.apache.commons.configuration.HierarchicalConfiguration;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
 
 /**
  * SecurityConfig <code>

@@ -13,10 +13,10 @@ package com.intuit.tank.vm.settings;
  * #L%
  */
 
-import org.apache.commons.configuration.HierarchicalConfiguration;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
+import org.apache.commons.configuration2.XMLConfiguration;
+import org.apache.commons.configuration2.builder.BasicConfigurationBuilder;
 import org.junit.jupiter.api.*;
-
-import com.intuit.tank.vm.settings.LogicStepConfig;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,7 +36,7 @@ public class LogicStepConfigCpTest {
     @Test
     public void testLogicStepConfig_1()
             throws Exception {
-        HierarchicalConfiguration config = new HierarchicalConfiguration();
+        HierarchicalConfiguration config = new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration();
 
         LogicStepConfig result = new LogicStepConfig(config);
 
@@ -55,7 +55,7 @@ public class LogicStepConfigCpTest {
     @Test
     public void testGetAppendAfter_1()
             throws Exception {
-        LogicStepConfig fixture = new LogicStepConfig(new HierarchicalConfiguration());
+        LogicStepConfig fixture = new LogicStepConfig(new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration());
 
         String result = fixture.getAppendAfter();
 
@@ -72,7 +72,7 @@ public class LogicStepConfigCpTest {
     @Test
     public void testGetInsertBefore_1()
             throws Exception {
-        LogicStepConfig fixture = new LogicStepConfig(new HierarchicalConfiguration());
+        LogicStepConfig fixture = new LogicStepConfig(new BasicConfigurationBuilder<>(XMLConfiguration.class).getConfiguration());
 
         String result = fixture.getInsertBefore();
 

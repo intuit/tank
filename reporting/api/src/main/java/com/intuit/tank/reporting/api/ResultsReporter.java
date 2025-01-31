@@ -2,7 +2,7 @@ package com.intuit.tank.reporting.api;
 
 import java.util.List;
 
-import org.apache.commons.configuration.HierarchicalConfiguration;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
 
 import com.intuit.tank.results.TankResult;
 

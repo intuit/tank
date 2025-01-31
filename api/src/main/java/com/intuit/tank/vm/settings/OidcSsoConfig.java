@@ -1,6 +1,6 @@
 package com.intuit.tank.vm.settings;
 
-import org.apache.commons.configuration.HierarchicalConfiguration;
+import org.apache.commons.configuration2.HierarchicalConfiguration;
 
 /**
  * OidcSsoConfig
