@@ -349,10 +349,12 @@ public class JobDetailFormatter {
         List<VmInstanceType> instanceTypes = config.getVmManagerConfig().getInstanceTypes();
         StringBuilder sb = new StringBuilder();
         sb.append(vmInstanceType);
-        instanceTypes.stream().filter(type -> type.getName().equals(vmInstanceType)).findFirst().ifPresent(type -> sb.append(" (cpus=").append(type.getCpus())
-                .append(" ecus=").append(type.getEcus())
-                .append(" memory=").append(type.getMemory())
-                .append(" cost=$").append(type.getCost()).append(" per hour)"));
+        instanceTypes.stream().filter(type -> type.getName().equals(vmInstanceType)).findFirst()
+                .ifPresent(type -> sb.append(" (types=").append(type.getTypes())
+                        .append(" cpus=").append(type.getCpus())
+                        .append(" ecus=").append(type.getEcus())
+                        .append(" memory=").append(type.getMemory())
+                        .append(" cost=$").append(type.getCost()).append(" per hour)"));
         return sb.toString();
     }
 

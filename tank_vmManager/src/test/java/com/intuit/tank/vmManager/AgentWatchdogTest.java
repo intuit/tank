@@ -46,7 +46,7 @@ public class AgentWatchdogTest {
         String result = agentWatchdog.toString();
 
         assertNotNull(result);
-//        assertTrue(result.endsWith("[sleepTime=30000,maxWaitForStart=180000,maxWaitForResponse=360000,maxRestarts=20]"));
+        assertTrue(result.endsWith("[sleepTime=30000,maxWaitForResponse=600000,maxRestarts=2]"));
     }
 
     @Test
@@ -61,14 +61,12 @@ public class AgentWatchdogTest {
         vmInformation.setState("pending");
         vmInformation.setInstanceId("i-123456789");
         List<VMInformation> vmInfo = Collections.singletonList( vmInformation );
-//        when(amazonInstanceMock.describeInstances(Mockito.anyString())).thenReturn(vmInfo);
         VMInstanceRequest instanceRequest = new VMInstanceRequest();
         instanceRequest.setRegion(VMRegion.STANDALONE);
 
         AgentWatchdog agentWatchdog = new AgentWatchdog(instanceRequest, vmInfo, vmTrackerMock, amazonInstanceMock, 10, 1000);
-
         agentWatchdog.run();
-//        verify(amazonInstanceMock, times(1)).describeInstances("i-123456789");
+
         verify(amazonInstanceMock, never()).killInstances(Mockito.anyList());
         verify(amazonInstanceMock, never()).reboot(Mockito.anyList());
         verify(cloudVmStatusContainerMock, times(1)).getEndTime();
@@ -89,14 +87,12 @@ public class AgentWatchdogTest {
         vmInformation.setState("pending");
         vmInformation.setInstanceId("i-123456789");
         List<VMInformation> vmInfo = Collections.singletonList( vmInformation );
-//        when(amazonInstanceMock.describeInstances(Mockito.anyString())).thenReturn(vmInfo);
         VMInstanceRequest instanceRequest = new VMInstanceRequest();
         instanceRequest.setRegion(VMRegion.STANDALONE);
 
         AgentWatchdog agentWatchdog = new AgentWatchdog(instanceRequest, vmInfo, vmTrackerMock, amazonInstanceMock, 10, 1000);
-
         agentWatchdog.run();
-//        verify(amazonInstanceMock, times(1)).describeInstances("i-123456789");
+
         verify(amazonInstanceMock, never()).killInstances(Mockito.anyList());
         verify(amazonInstanceMock, never()).reboot(Mockito.anyList());
         verify(cloudVmStatusContainerMock, times(2)).getEndTime();

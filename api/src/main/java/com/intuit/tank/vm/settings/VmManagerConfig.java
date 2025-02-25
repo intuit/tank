@@ -90,7 +90,7 @@ public class VmManagerConfig implements Serializable {
                     Map<VMImageType, InstanceDescription> instanceMap = new HashMap<VMImageType, InstanceDescription>();
                     regionMap.put(region, instanceMap);
                     List<HierarchicalConfiguration> instanceConfigs = regionConfig
-                            .configurationsAt("instance-descripion");
+                            .configurationsAt("instance-description");
                     for (HierarchicalConfiguration instanceConfig : instanceConfigs) {
                         InstanceDescription description = new InstanceDescription(instanceConfig, defaultInstance);
                         instanceMap.put(description.getType(), description);
@@ -111,9 +111,10 @@ public class VmManagerConfig implements Serializable {
             instanceTypes = new ArrayList<VmInstanceType>();
             if (instanceTypesConfig != null) {
                 for (HierarchicalConfiguration instanceTypeConfig : instanceTypesConfig) {
-                    // example: <type name="c3.large" cost=".105" users="500" cpus="2" ecus="7" mem="3.75" />
+                    // example: <type name="m.large" types="m6g.large" cost=".105" users="500" cpus="2" ecus="7" mem="3.75" />
                     VmInstanceType type = VmInstanceType.builder()
                             .withName(instanceTypeConfig.getString("@name"))
+                            .withTypes(instanceTypeConfig.getList("@types"))
                             .withCost(instanceTypeConfig.getDouble("@cost", 0D))
                             .withMemory(instanceTypeConfig.getDouble("@mem", 0D))
                             .withJvmArgs(instanceTypeConfig.getString("@jvmArgs"))

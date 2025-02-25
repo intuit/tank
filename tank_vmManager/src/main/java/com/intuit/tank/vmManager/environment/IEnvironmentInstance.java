@@ -47,9 +47,8 @@ public interface IEnvironmentInstance {
      *
      * @param request
      *          request of instances to kill
-     * @return list of VmInformation objects
      */
-    public List<VMInformation> kill(VMRequest request);
+    public void kill(VMRequest request);
 
     /**
      * Describe The instances specified.

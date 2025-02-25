@@ -15,6 +15,7 @@ package com.intuit.tank.vm.settings;
 
 import java.io.Serializable;
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -30,6 +31,7 @@ public class VmInstanceType implements Serializable {
 
     // <type name="c3.large" cost=".105" users="500" cpus="2" ecus="7" mem="3.75" default="false" />
     private String name;
+    private List<String> types;
     private String jvmArgs;
     private double cost;
     private double memory;
@@ -59,6 +61,13 @@ public class VmInstanceType implements Serializable {
      */
     public String getName() {
         return name;
+    }
+
+    /**
+     * @return the name
+     */
+    public List<String> getTypes() {
+        return types;
     }
 
     /**
@@ -134,6 +143,11 @@ public class VmInstanceType implements Serializable {
             return this;
         }
 
+        public Builder withTypes(List<Object> aValue) {
+            instance.types = aValue.stream().map(Object::toString).toList();
+            return this;
+        }
+
         public Builder withJvmArgs(String aValue) {
             instance.jvmArgs = aValue;
             return this;
@@ -173,7 +187,8 @@ public class VmInstanceType implements Serializable {
 
     public String getDisplay() {
         NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.US);
-        return name + " (cpus=" + cpus +
+        return name + " (types=" + types +
+                " cpus=" + cpus +
                 " ecus=" + ecus +
                 " users=" + users +
                 " memory=" + memory + "G" +
