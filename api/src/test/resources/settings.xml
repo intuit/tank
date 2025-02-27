@@ -139,10 +139,10 @@
 			</tank-client>
 			<tank-client name="Apache HttpClient 4.5">com.intuit.tank.httpclient4.TankHttpClient4
 			</tank-client>
-			<tank-client name="Apache HttpClient 5">com.intuit.tank.httpclient5.TankHttpClient5
+			<tank-client name="JDK HttpClient">com.intuit.tank.httpclientjdk.TankHttpClientJDK
 			</tank-client>
 		</tank-http-clients>
-		<default-tank-client>Apache HttpClient 5</default-tank-client>
+		<default-tank-client>JDK HttpClient</default-tank-client>
 
 	</agent-config>
 
@@ -186,7 +186,7 @@
 
 		<!-- Instance descriptions for regions -->
 		<instance-descriptions region="US_WEST_2">
-			<instance-descripion name="AGENT">
+			<instance-description name="AGENT">
 				<!-- if using SSM Parameters. recommended over using raw ami -->
 				<!-- <ssm-ami>[SSM-AMI-ID]</ssm-ami> -->
 				<ami>[AMI-ID]</ami>
@@ -194,29 +194,35 @@
 				<!-- if using roles. recommended over using security keys -->
 				<!-- <iam-role>role</iam-role> -->
 				<!-- optional if running ni a subnet in a vpc, use the subnetIds -->
-				<!-- <vpc-subnet>subnet-472b9f30</vpc-subnet> <security-group-ids>sg-9f9936fb</security-group-ids> -->
-			</instance-descripion>
+				<vpc-subnet>[SUBNET-1]</vpc-subnet>
+				<vpc-subnet>[SUBNET-2]</vpc-subnet>
+				<vpc-subnet>[SUBNET-3]</vpc-subnet>
+				<!-- <security-group-ids>sg-9f9936fb</security-group-ids> -->
+			</instance-description>
 		</instance-descriptions>
 
 		<instance-descriptions region="US_EAST_2">
-			<instance-descripion name="AGENT">
+			<instance-description name="AGENT">
 				<ssm-ami>[SSM-AMI-ID]</ssm-ami>
 				<ami>[AMI-ID]</ami>
 				<keypair>[KEYPAIR]</keypair>
 				<!-- if using roles. recommended over using security keys -->
 				<!-- <iam-role>role</iam-role> -->
 				<!-- optional if running ni a subnet in a vpc, use the subnetIds -->
-				<!-- <vpc-subnet>subnet-472b9f30</vpc-subnet> <security-group-ids>sg-9f9936fb</security-group-ids> -->
-			</instance-descripion>
+				<vpc-subnet>[SUBNET-1]</vpc-subnet>
+				<vpc-subnet>[SUBNET-2]</vpc-subnet>
+				<vpc-subnet>[SUBNET-3]</vpc-subnet>
+				<!-- <security-group-ids>sg-9f9936fb</security-group-ids> -->
+			</instance-description>
 		</instance-descriptions>
 
 		<!-- used to set agent instnces and calculate costs. -->
 		<instance-types type="amazon">
-			<type name="m8g.large" cost=".0898" users="500" cpus="2" ecus="8" mem="8" jvmArgs="-XX:InitialRAMPercentage=70.0 -XX:MaxRAMPercentage=70.0 -XX:+UseG1GC" />
-			<type name="m8g.xlarge" cost=".1795" users="2000" cpus="4" ecus="16" mem="16" default="true" jvmArgs="-XX:InitialRAMPercentage=70.0 -XX:MaxRAMPercentage=70.0 -XX:+UseG1GC" />
-			<type name="m8g.2xlarge" cost=".3590" users="4000" cpus="8" ecus="31" mem="32" jvmArgs="-XX:InitialRAMPercentage=70.0 -XX:MaxRAMPercentage=70.0 -XX:+UseG1GC" />
-			<type name="m8g.4xlarge" cost=".7181" users="8000" cpus="16" ecus="61" mem="64" jvmArgs="-XX:InitialRAMPercentage=70.0 -XX:MaxRAMPercentage=70.0 -XX:+UseG1GC" />
-			<type name="m8g.9xlarge" cost="1.436" users="16000" cpus="36" ecus="139" mem="128" jvmArgs="-XX:InitialRAMPercentage=70.0 -XX:MaxRAMPercentage=70.0 -XX:+UseG1GC" />
+			<type name="m.large" types="m8g.large,m7g.large" cost=".0898" users="500" cpus="2" ecus="8" mem="8" jvmArgs="-XX:InitialRAMPercentage=70.0 -XX:MaxRAMPercentage=70.0 -XX:+UseG1GC" />
+			<type name="m.xlarge" types="m8g.xlarge,m7g.xlarge" cost=".1795" users="2000" cpus="4" ecus="16" mem="16" default="true" jvmArgs="-XX:InitialRAMPercentage=70.0 -XX:MaxRAMPercentage=70.0 -XX:+UseG1GC" />
+			<type name="m.2xlarge" types="m8g.2xlarge,m7g.2xlarge" cost=".3590" users="4000" cpus="8" ecus="31" mem="32" jvmArgs="-XX:InitialRAMPercentage=70.0 -XX:MaxRAMPercentage=70.0 -XX:+UseG1GC" />
+			<type name="m.4xlarge" types="m8g.4xlarge,m7g.4xlarge" cost=".7181" users="8000" cpus="16" ecus="61" mem="64" jvmArgs="-XX:InitialRAMPercentage=70.0 -XX:MaxRAMPercentage=70.0 -XX:+UseG1GC" />
+			<type name="m.8xlarge" types="m8g.8xlarge,m7g.8xlarge" cost="1.436" users="16000" cpus="36" ecus="139" mem="128" jvmArgs="-XX:InitialRAMPercentage=70.0 -XX:MaxRAMPercentage=70.0 -XX:+UseG1GC" />
 		</instance-types>
 
 

@@ -35,7 +35,7 @@ public class JobDetailFormatterTest {
     public void addError() {
         StringBuilder sb = new StringBuilder();
         JobDetailFormatter.addError(sb, "Error");
-        assertTrue(sb.length() > 0);
+        assertFalse(sb.isEmpty());
     }
 
     @Test
@@ -70,7 +70,7 @@ public class JobDetailFormatterTest {
     @Test
     public void estimateCost() {
         BigDecimal estimateCost = JobDetailFormatter.estimateCost(2, BigDecimal.valueOf(1.5D), 600000);
-        assertEquals(estimateCost.doubleValue(), 7.50D);
+        assertEquals(7.50D, estimateCost.doubleValue());
     }
 
     @Test
@@ -83,8 +83,8 @@ public class JobDetailFormatterTest {
 
     @Test
     public void getVmDetails() {
-        String vmDetails = JobDetailFormatter.getVmDetails(new TankConfig(), "m8g.xlarge");
-        assertEquals("m8g.xlarge (cpus=4 ecus=16 memory=16.0 cost=$0.1795 per hour)", vmDetails);
+        String vmDetails = JobDetailFormatter.getVmDetails(new TankConfig(), "m.xlarge");
+        assertEquals("m.xlarge (types=[m8g.xlarge, m7g.xlarge] cpus=4 ecus=16 memory=16.0 cost=$0.1795 per hour)", vmDetails);
     }
 
     /**
@@ -152,7 +152,7 @@ public class JobDetailFormatterTest {
         throws Exception {
         TankConfig config = new TankConfig();
         JobInstance proposedJobInstance = new JobInstance();
-        List<JobRegion> regions = new LinkedList();
+        List<JobRegion> regions = new LinkedList<>();
         long simulationTime = 1L;
 
         String result = JobDetailFormatter.calculateCost(config, proposedJobInstance, regions, simulationTime);
@@ -175,7 +175,7 @@ public class JobDetailFormatterTest {
         throws Exception {
         TankConfig config = new TankConfig();
         JobInstance proposedJobInstance = new JobInstance();
-        List<JobRegion> regions = new LinkedList();
+        List<JobRegion> regions = new LinkedList<>();
         long simulationTime = 1L;
 
         String result = JobDetailFormatter.calculateCost(config, proposedJobInstance, regions, simulationTime);
@@ -197,7 +197,7 @@ public class JobDetailFormatterTest {
         throws Exception {
         TankConfig config = new TankConfig();
         JobInstance proposedJobInstance = new JobInstance();
-        List<JobRegion> regions = new LinkedList();
+        List<JobRegion> regions = new LinkedList<>();
         long simulationTime = 1L;
 
         String result = JobDetailFormatter.calculateCost(config, proposedJobInstance, regions, simulationTime);
@@ -219,7 +219,7 @@ public class JobDetailFormatterTest {
         throws Exception {
         TankConfig config = new TankConfig();
         JobInstance proposedJobInstance = new JobInstance();
-        List<JobRegion> regions = new LinkedList();
+        List<JobRegion> regions = new LinkedList<>();
         long simulationTime = 1L;
 
         String result = JobDetailFormatter.calculateCost(config, proposedJobInstance, regions, simulationTime);
@@ -306,7 +306,7 @@ public class JobDetailFormatterTest {
         throws Exception {
         JobInstance proposedJobInstance = new JobInstance();
         Workload workload = new Workload();
-        workload.setTestPlan(new LinkedList());
+        workload.setTestPlan(new LinkedList<>());
         JobValidator validator = new JobValidator(new Script());
 
         long result = JobDetailFormatter.getSimulationTime(proposedJobInstance, workload, validator);
@@ -333,7 +333,7 @@ public class JobDetailFormatterTest {
         throws Exception {
         JobInstance proposedJobInstance = new JobInstance();
         Workload workload = new Workload();
-        workload.setTestPlan(new LinkedList());
+        workload.setTestPlan(new LinkedList<>());
         JobValidator validator = new JobValidator(new Script());
 
         long result = JobDetailFormatter.getSimulationTime(proposedJobInstance, workload, validator);

@@ -38,15 +38,7 @@ public class KillInstance implements Runnable {
     @Override
     public void run() {
         IEnvironmentInstance environment = this.getEnvironment();
-        List<VMInformation> killResponse = environment.kill(request);
-
-        // update status of instance
-        for (VMInformation vmInformation : killResponse) {
-            String instanceId = vmInformation.getInstanceId();
-            logger.info("killed instance " + instanceId);
-            // any status updates to the vm image in the database may be performed here:
-        }
-        // JMSMessages.postResponse(killResponse);
+        if (environment != null) environment.kill(request);
     }
 
     /**
